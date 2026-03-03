@@ -28,7 +28,7 @@ export const PeopleFilters = () => {
 
     if (isSelected) {
       return {
-        centuries: selectedCenturies.filter(c => c !== century) || null,
+        centuries: selectedCenturies.filter(c => c !== century),
       };
     }
 
@@ -46,10 +46,16 @@ export const PeopleFilters = () => {
         >
           All
         </SearchLink>
-        <SearchLink className={cn({ 'is-active': 'm' })} params={{ sex: 'm' }}>
+        <SearchLink
+          className={cn('navbar-item', { 'is-active': sex === 'm' })}
+          params={{ sex: 'm' }}
+        >
           Male
         </SearchLink>
-        <SearchLink className={cn({ 'is-active': 'f' })} params={{ sex: 'f' }}>
+        <SearchLink
+          className={cn('navbar-item', { 'is-active': sex === 'f' })}
+          params={{ sex: 'f' }}
+        >
           Female
         </SearchLink>
       </p>

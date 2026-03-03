@@ -12,6 +12,16 @@ type Props = {
 
 /* eslint-disable jsx-a11y/control-has-associated-label */
 export const PeopleTable: React.FC<Props> = ({ people, visiblePeople }) => {
+  const peopleByName = React.useMemo(() => {
+    const map: Record<string, Person> = {};
+
+    people.forEach(person => {
+      map[person.name] = person;
+    });
+
+    return map;
+  }, [people]);
+
   const { slug } = useParams();
   const [searchParams] = useSearchParams();
 
@@ -96,8 +106,12 @@ export const PeopleTable: React.FC<Props> = ({ people, visiblePeople }) => {
 
       <tbody>
         {visiblePeople.map(person => {
-          const mother = people.find(p => p.name === person.motherName) || null;
-          const father = people.find(p => p.name === person.fatherName) || null;
+          const mother = person.motherName
+            ? peopleByName[person.motherName]
+            : null;
+          const father = person.fatherName
+            ? peopleByName[person.fatherName]
+            : null;
 
           return (
             <tr
